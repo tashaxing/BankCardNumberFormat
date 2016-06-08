@@ -67,7 +67,6 @@
     
     
     //process the textField text
-    
     NSString* text = textField.text;
     //delete
     if([string length] <= 0) // or [string isEqualToString:'']
@@ -75,7 +74,7 @@
         
         NSLog(@"slected range: location %d, length %d", range.location, range.length);
         
-        //最后一位,遇到空格则多删除一次
+        //delete the last char
         if(range.location == text.length - 1) //because already delete one char, so it is text.length - 1
         {
             //actually it will delete twice, first the backspace then delete the space
@@ -84,7 +83,7 @@
             
             return YES;
         }
-        //从中间删除
+        //delete in the middle
         else
         {
             NSInteger offset = range.location;
@@ -98,6 +97,7 @@
             }
             [textField deleteBackward];
             
+            //format the  string
             textField.text = [self parseString:textField.text];
             
             //reset the cursor pos
@@ -106,10 +106,9 @@
             
             
             return NO;
-            
         }
     }
-    //insert
+    //insert int tail or in the middle
     else
     {
         
@@ -124,7 +123,7 @@
         
         [textField insertText:string]; //Add the character text to the cursor and redisplay the text.
         
-        //parsing the textField whether insert at last or in the middle
+        //format the string
         textField.text = [self parseString:textField.text];
         
         //move the cursor to the right place
@@ -141,26 +140,12 @@
         return NO;
     }
     
-    
     return NO;
 }
 
 
 
 #pragma mark - helper functions
-//format the textfiled text
-//-(void)formatTextFieldText:(NSString*)offset
-//{
-//    _bankCardNumberText.text = [self parseString:_bankCardNumberText.text];
-//    
-//    UITextPosition *newPos = [_bankCardNumberText positionFromPosition:_bankCardNumberText.beginningOfDocument offset:[offset integerValue]];
-//    NSLog(@"%@", newPos);
-//    _bankCardNumberText.selectedTextRange = [_bankCardNumberText textRangeFromPosition:newPos toPosition:newPos];
-//    NSLog(@"%@", _bankCardNumberText.selectedTextRange);
-//    
-//    
-//}
-
 //remove the space of string
 -(NSString*)noneSpaseString:(NSString*)string
 {
@@ -188,7 +173,7 @@
     return  formatTextStr;
 }
 
-//check whether the bankcard is valid
+//check whether the bankcard is valid using the Luhn algorithm
 - (BOOL)isValidBankCard:(NSString *)bankCardNumber
 {
     //reverse odd and even sum
@@ -230,6 +215,7 @@
     NSString *bankCard = [self noneSpaseString:self.bankCardNumberText.text];
     NSLog(@"the bankcard number is: %@", bankCard);
     
+    //if the bankcardnumber is invalid then pop an alert window
     if(bankCard.length > 0 && [self isValidBankCard:bankCard])
         NSLog(@"valid bankcard");
     else
