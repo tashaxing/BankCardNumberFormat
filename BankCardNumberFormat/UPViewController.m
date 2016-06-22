@@ -10,14 +10,14 @@
 
 /*************global const variables and macros*****/
 //the max length of card number
-const static int kCardNumberLen       = 19;
+static const int kCardNumberLen       = 19;
 //the format space of card number
-const static int kCardSpaceStep       = 4;
+static const int kCardSpaceStep       = 4;
 
 //the width of textfield
-const static float kTextFieldWidth    = 140;
+static const float kTextFieldWidth    = 140;
 //the width of submit button
-const static float kSubmitButtonWidth = 30;
+static const float kSubmitButtonWidth = 30;
 
 //the exception string
 static NSString *kExceptionStr =  @"0123456789\b";
